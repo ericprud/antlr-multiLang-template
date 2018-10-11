@@ -4,9 +4,9 @@ UCS2 = (function () {
   let parser = null;
   let ret = function (input) {
     const antlr4 = require('antlr4');
-    const ucs2Lexer = require('./jslib/ucs2Lexer').ucs2Lexer;
-    const ucs2Parser = require('./jslib/ucs2Parser').ucs2Parser;
-    const ucs2Listener = require('./jslib/ucs2Listener').ucs2Listener;
+    const ucs2Lexer = require('./jslib/Ucs2Lexer').Ucs2Lexer;
+    const ucs2Parser = require('./jslib/Ucs2Parser').Ucs2Parser;
+    const ucs2Listener = require('./jslib/Ucs2Listener').Ucs2Listener;
 
     const istream = new antlr4.InputStream(input);
     const lexer = new ucs2Lexer(istream);
