@@ -1,0 +1,8 @@
+41 fffd d800 dc00 db7f dffd a 3c
+
+10000 - d800 dc00
+103ff - d800 dfff
+10400 - d801 dc00
+efffd - db7f dffd
+
+[d800-db7f][dc00-dfff]

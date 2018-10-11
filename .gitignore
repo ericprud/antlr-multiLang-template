@@ -1,0 +1,3 @@
+coverage/
+lib/ucs2*
+node_modules/
