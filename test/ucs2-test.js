@@ -5,7 +5,7 @@ const fs = require("fs");
 ucs2 = require('../run.js');
 describe("A UCS2 parser", function () {
   const tests = [
-    {text: 'ab 12 cd 34', pass: true },
+    {text: 'aA�𐀀󯿽 12 cd 34', pass: true },
     {text: 'ab 1$ cd 34', pass: false },
     {text: 'ab cd 34', pass: false },
   ]
