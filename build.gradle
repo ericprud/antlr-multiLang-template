@@ -1,0 +1,46 @@
+apply plugin: 'java-library'
+apply plugin: 'antlr'
+ 
+dependencies {
+  api 'org.apache.commons:commons-math3:3.6.1'
+  antlr "org.antlr:antlr4:4.7.1"
+  implementation 'com.google.guava:guava:20.0'
+  implementation "org.antlr:antlr4-runtime:4.7.1"
+  testImplementation 'junit:junit:4.12'
+}
+
+repositories {
+    jcenter()
+}
+
+generateGrammarSource {
+    maxHeapSize = "64m"
+    arguments += ['-package', 'me.ericprud.examples.ucs2']
+    outputDirectory = new File("generated-src/antlr/main/me/ericprud/examples/ucs2".toString())
+}
+compileJava.dependsOn generateGrammarSource
+sourceSets {
+    generated {
+        java.srcDir 'generated-src/antlr/main/'
+    }
+}
+compileJava.source sourceSets.generated.java, sourceSets.main.java
+ 
+clean{
+    delete "generated-src"
+}
+ 
+test {
+  dependsOn cleanTest
+  testLogging {
+    showStandardStreams = true
+  }
+}
+
+// idea {
+//     module {
+//         sourceDirs += file("generated-src/antlr/main")
+//     }
+// }
+
+// generated-src/antlr/main/me/ericprud/mylanguage
