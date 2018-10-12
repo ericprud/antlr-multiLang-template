@@ -5,7 +5,10 @@ import me.ericprud.examples.ucs2.Ucs2Parser;
 import me.ericprud.examples.ucs2.Ucs2Lexer;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.BailErrorStrategy;
+// import org.antlr.v4.runtime.BailErrorStrategy;
+import org.antlr.v4.runtime.BaseErrorListener;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -21,9 +24,11 @@ public class Ucs2 {
         Ucs2Lexer lexer = new Ucs2Lexer(stream2);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         Ucs2Parser parser = new Ucs2Parser(tokens);
-        parser.setErrorHandler(new BailErrorStrategy());
-        lexer.removeErrorListeners();
-        parser.removeErrorListeners(); // not tested
+        // parser.setErrorHandler(new BailErrorStrategy());
+        lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+        parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+        // lexer.removeErrorListeners();
+        // parser.removeErrorListeners(); // not tested
         // System.err.println(new Date());
         return parser.ucs2();
     }
