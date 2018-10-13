@@ -3,7 +3,7 @@
  */
 import org.junit.Test;
 import static org.junit.Assert.*;
-import me.ericprud.examples.ucs2.Ucs2Parser;
+import es.weso.shex.parser.ShExDocParser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
@@ -19,8 +19,9 @@ public class Ucs2Test {
 + "   <http://a.example/p2> .\n"
 + "}\n"
             ;
-        Ucs2Parser.Ucs2Context ctx = ucs2.parseString(t);
-        String l = ((Ucs2Parser.InlineShapeAtomShapeOrRefContext)((Ucs2Parser.ShapeAtomShapeOrRefContext)ctx.notStartAction().shapeExprDecl().shapeExpression().shapeOr().shapeAnd(0).shapeNot(0).shapeAtom()).shapeOrRef().shapeDefinition().tripleExpression().oneOfTripleExpr().groupTripleExpr().singleElementGroup().unaryTripleExpr().tripleConstraint().inlineShapeExpression().inlineShapeOr().inlineShapeAnd(0).inlineShapeNot(0).inlineShapeAtom()).inlineShapeOrRef().shapeRef().shapeExprLabel().blankNode().BLANK_NODE_LABEL().getText();
+        System.out.println(cify(t));
+        ShExDocParser.ShExDocContext ctx = ucs2.parseString(t);
+        String l = ((ShExDocParser.InlineShapeAtomShapeOrRefContext)((ShExDocParser.ShapeAtomShapeOrRefContext)ctx.notStartAction().shapeExprDecl().shapeExpression().shapeOr().shapeAnd(0).shapeNot(0).shapeAtom()).shapeOrRef().shapeDefinition().tripleExpression().oneOfTripleExpr().groupTripleExpr().singleElementGroup().unaryTripleExpr().tripleConstraint().inlineShapeExpression().inlineShapeOr().inlineShapeAnd(0).inlineShapeNot(0).inlineShapeAtom()).inlineShapeOrRef().shapeRef().shapeExprLabel().blankNode().BLANK_NODE_LABEL().getText();
         assertTrue("should recover label", l.equals("_:AZazÀÖØöø˿ͰͽͿ῿‌‍⁰↏Ⰰ⿯、퟿豈﷏ﷰ�𐀀󯿽"));
     }
 
@@ -28,7 +29,7 @@ public class Ucs2Test {
     //     Ucs2 ucs2 = new Ucs2();
     //     String t = "_:aA�𐀀󯿽 _:cd 34";
     //     try {
-    //         Ucs2Parser.Ucs2Context ctx = ucs2.parseString(t);
+    //         ShExDocParser.ShExDocContext ctx = ucs2.parseString(t);
     //         assertFalse("should not parse", true);
     //     } catch (ParseCancellationException e) {
     //     }
@@ -38,7 +39,7 @@ public class Ucs2Test {
     //     Ucs2 ucs2 = new Ucs2();
     //     String t = "_:aA�က𐀀󯿽 _:cd 34";
     //     try {
-    //         Ucs2Parser.Ucs2Context ctx = ucs2.parseString(t);
+    //         ShExDocParser.ShExDocContext ctx = ucs2.parseString(t);
     //         assertFalse("should not parse", true);
     //     } catch (ParseCancellationException e) {
     //     }
@@ -47,9 +48,20 @@ public class Ucs2Test {
     static String uify (String s) {
         String ret = "";
         final int length = s.length();
+        for (int i = 0; i < length; ++i) {
+            final int sc = s.charAt(i);
+            ret += String.format("%x ", sc);
+        }
+        return ret;
+    }
+
+    static String cify (String s) {
+        String ret = "";
+        final int length = s.length();
+        System.out.println("length:" + length);
         for (int i = 0; i < length; ) {
             final int sc = s.codePointAt(i);
-            ret += String.format("\\u{%05x}", sc);
+            ret += String.format("%x ", sc);
             i += Character.charCount(sc);
         }
         return ret;

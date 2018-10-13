@@ -1,5 +1,3 @@
-grammar Ucs2;
-
 // ANTLR4 Equivalent of accompanying bnf, developed in
 // http://www.w3.org/2005/01/yacker/uploads/ShEx3
 // Updated to Jul 27 AM ShEx3
@@ -34,7 +32,9 @@ grammar Ucs2;
 // ~ s/encapsulatedShape/bracketedTripleExpr/ (EGP 20160930)
 // Jul 26, 2018 - Replace extensions by includeSet, added extends/restricts
 
-ucs2 		: directive* ((notStartAction | startActions) statement*)? EOF;  // leading CODE
+grammar ShExDoc;
+
+shExDoc 		: directive* ((notStartAction | startActions) statement*)? EOF;  // leading CODE
 directive       : baseDecl
 				| prefixDecl
 				| importDecl
