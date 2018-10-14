@@ -18,18 +18,28 @@ import java.util.Date;
 
 public class Ucs2 {
     Ucs2Parser p;
-    public Ucs2Parser.Ucs2Context parseString(String input) throws ParseCancellationException {
-        CharStream stream = CharStreams.fromString(input);
-        ANTLRInputStream stream2 = new ANTLRInputStream(input);
-        Ucs2Lexer lexer = new Ucs2Lexer(stream2);
+    public Ucs2Parser.Ucs2Context parseString(String input) throws ParseCancellationException, Exception {
+        // CharStream stream = CharStreams.fromString(input);
+        ANTLRInputStream stream = new ANTLRInputStream(input);
+        Ucs2Lexer lexer = new Ucs2Lexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         Ucs2Parser parser = new Ucs2Parser(tokens);
         // parser.setErrorHandler(new BailErrorStrategy());
-        lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
-        parser.addErrorListener(ThrowingErrorListener.INSTANCE);
-        // lexer.removeErrorListeners();
-        // parser.removeErrorListeners(); // not tested
+        lexer.removeErrorListeners();
+        parser.removeErrorListeners(); // not tested
+        ThresholdErrorListener l = new ThresholdErrorListener(10);
+        lexer.addErrorListener(l);
+        parser.addErrorListener(l);
         // System.err.println(new Date());
-        return parser.ucs2();
+        Ucs2Parser.Ucs2Context ret;
+        try {
+            ret = parser.ucs2();
+        } catch (Exception e) {
+            ret = null;
+        }
+        Exception failures = l.getException();
+        if (failures != null)
+            throw l.getException();
+        return ret;
     }
 }

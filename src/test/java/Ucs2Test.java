@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 public class Ucs2Test {
-    @Test public void t_unicodeString() {
+    @Test public void t_unicodeString() throws Exception {
         Ucs2 ucs2 = new Ucs2();
         String t = "aA�𐀀󯿽 12 cd 34";
         Ucs2Parser.Ucs2Context ctx = ucs2.parseString(t);
@@ -25,6 +25,7 @@ public class Ucs2Test {
             Ucs2Parser.Ucs2Context ctx = ucs2.parseString(t);
             assertFalse("should not parse", true);
         } catch (ParseCancellationException e) {
+        } catch (Exception e) {
         }
     }
 
@@ -35,6 +36,7 @@ public class Ucs2Test {
             Ucs2Parser.Ucs2Context ctx = ucs2.parseString(t);
             assertFalse("should not parse", true);
         } catch (ParseCancellationException e) {
+        } catch (Exception e) {
         }
     }
 
