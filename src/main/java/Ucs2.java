@@ -19,8 +19,8 @@ import java.util.Date;
 public class Ucs2 {
     Ucs2Parser p;
     public Ucs2Parser.Ucs2Context parseString(String input) throws ParseCancellationException, Exception {
-        // CharStream stream = CharStreams.fromString(input);
-        ANTLRInputStream stream = new ANTLRInputStream(input);
+        CharStream stream = CharStreams.fromString(input);
+        // ANTLRInputStream stream = new ANTLRInputStream(input);
         Ucs2Lexer lexer = new Ucs2Lexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         Ucs2Parser parser = new Ucs2Parser(tokens);
