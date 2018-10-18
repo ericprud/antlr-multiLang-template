@@ -49,7 +49,7 @@ pyt: $(PYPARSER)
 #### java target ####
 JAVAPARSER=generated-src/antlr/main/me/ericprud/examples/ucs2/Ucs2Parser.java
 
-$(JAVAPARSER): src/main/antlr/Ucs2.g4
+$(JAVAPARSER): Ucs2.g4
 	./gradlew generateGrammarSource
 
 javat: $(JAVAPARSER)
